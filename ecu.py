@@ -37,3 +37,15 @@ class ECU:
         else:
             self.car.set_engine(False)
    
+    def select_gear(self,gear):
+        
+        gear=gear.upper()
+
+        if gear not in ["P", "R", "N", "D"]:
+            print("Invalid gear")
+        elif not self.car.engine_running:
+            print("Cannot shift gears if the engine is not on")
+        elif self.car.speed!=0 and self.car.gear=="P":
+            print("Cannot switch to park if car is moving")
+        else:
+            self.car.set_gear(gear)
