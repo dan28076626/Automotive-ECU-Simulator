@@ -38,7 +38,7 @@ class ECU:
             self.car.set_engine(False)
    
     def select_gear(self,gear):
-        
+
         gear=gear.upper()
 
         if gear not in ["P", "R", "N", "D"]:
@@ -49,3 +49,15 @@ class ECU:
             print("Cannot switch to park if car is moving")
         else:
             self.car.set_gear(gear)
+
+    def drive_one_mile(self):
+        if not self.car.engine_running:
+            print("Cannot move if car is not turned on")
+        elif self.car.fuel<=0:
+            print("Cannot move the car if there is no fuel")
+        elif self.car.gear !="D":
+            print("Cannot move if car is not in drive")
+        else:
+            self.car.drive_one_mile()
+            with open("fuel.txt", "w") as file:
+                file.write(str(self.car.fuel))
