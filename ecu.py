@@ -28,4 +28,12 @@ class ECU:
 
         elif self.car.gear!="P":
             print("Cannot start the car if the car is not in park")
+
+    def stop_engine(self):
+        if not self.car.engine_running:
+            print("Cannot stop the engine if it is already off")
+        elif self.car.gear !="P":
+            print("Cannot turn the car off if it is in drive")
+        else:
+            self.car.set_engine(False)
    
