@@ -15,7 +15,7 @@ class CANBus:
     def send_message(self, sender, receiver, message):
         can_id=self.id_codes.get(receiver.upper(),"0x000")
         can_message = {
-            id:can_id,
+            "id":can_id,
             "date":dt.now().strftime("%d/%m/%Y %H:%M:%S"),
             "sender": sender,
             "receiver": receiver,

@@ -1,14 +1,23 @@
 from car import Car
+from canbus import CANBus
 
 class ECU:
-    def __init__(self, keypassword, car):
+    def __init__(self, keypassword, car,canbus):
         self.correctkeyhex = keypassword
         self.car = car
+        self.canbus=canbus
         try:
             with open("fuel.txt", "r") as file:
                 self.car.fuel=int(file.read())  
         except FileNotFoundError:
             self.car.fuel=100
+
+    def get_canbus(self):
+        for messages in self.canbus.messages:
+            if self.canbus.messages["id"]=="0x101":
+                if self.canbus.messages["message"]=="UNLOCK CAR":
+                    self.unlock_car()
+
 
 
     def unlock_car(self,keyfobsignal):
