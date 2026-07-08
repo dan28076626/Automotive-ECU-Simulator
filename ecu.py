@@ -61,3 +61,18 @@ class ECU:
             self.car.drive_one_mile()
             with open("fuel.txt", "w") as file:
                 file.write(str(self.car.fuel))
+
+    def drive_miles(self,miles):
+        if not self.car.engine_running:
+            print("Cannot move if car is not turned on")
+        elif self.car.fuel<=0:
+            print("Cannot move the car if there is no fuel")
+        elif self.car.gear !="D":
+            print("Cannot move if car is not in drive")
+        else:
+            for i in range(miles):
+                self.drive_one_mile()
+                if self.car.fuel<5:
+                    print("Does not have enough fuel to drive one more mile")
+            with open("fuel.txt", "w") as file:
+                file.write(str(self.car.fuel))
