@@ -76,3 +76,15 @@ class ECU:
                     print("Does not have enough fuel to drive one more mile")
             with open("fuel.txt", "w") as file:
                 file.write(str(self.car.fuel))
+
+    def refuel(self,amount):
+        if self.car.engine_running:
+            print("Cannot refuel if engine is running")
+        elif amount<=0:
+            print("Cannot refuel if the value is less than/equal to 0")
+        elif self.car.fuel==100:
+            print("Fuel tank already full")
+        else:
+            self.car.refuel(amount)
+            with open("fuel.txt", "w") as file:
+                file.write(str(self.car.fuel))
