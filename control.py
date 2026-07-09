@@ -11,7 +11,8 @@ from canbus import CANBus
 
 
 
-bus.send_message("Driver", "ECU", "START_ENGINE")
-bus.send_message("Driver", "ECU", "SELECT_GEAR_D")
-bus.send_message("Driver", "ECU", "DRIVE_1_MILE")
+bus.send_message("Driver", "ECU", "UNLOCK_CAR", "NONE")
+bus.send_message("Driver", "ECU", "START_ENGINE", "NONE")
+bus.send_message("Driver", "ECU", "SELECT_GEAR", "D")
+bus.send_message("Driver", "ECU", "DRIVE_1_MILE", "NONE")
 my_ecu.get_canbus()

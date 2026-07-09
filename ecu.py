@@ -13,10 +13,15 @@ class ECU:
             self.car.fuel=100
 
     def get_canbus(self):
-        for messages in self.canbus.messages:
-            if self.canbus.messages["id"]=="0x101":
-                if self.canbus.messages["message"]=="UNLOCK CAR":
-                    self.unlock_car()
+        for message in self.canbus.messages:
+            if message["id"]=="0x101":
+                if message["command"]=="UNLOCK_CAR":
+                    keypassword=input("Enter keyfobsignal: ")
+                    self.unlock_car(keypassword)
+                elif message["command"]=="START_ENGINE":
+                    self.start_engine()
+                elif message["command"]=="SELECT_GEAR" and message["data"]=="D":
+                    self.select_gear("D")
 
 
 
