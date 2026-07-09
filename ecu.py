@@ -20,8 +20,8 @@ class ECU:
                     self.unlock_car(keypassword)
                 elif message["command"]=="START_ENGINE":
                     self.start_engine()
-                elif message["command"]=="SELECT_GEAR" and message["data"]=="D":
-                    self.select_gear("D")
+                elif message["command"]=="SELECT_GEAR":
+                    self.select_gear(message["data"])
 
 
 
