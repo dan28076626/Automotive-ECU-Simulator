@@ -18,10 +18,25 @@ class ECU:
                 if message["command"]=="UNLOCK_CAR":
                     keypassword=input("Enter keyfobsignal: ")
                     self.unlock_car(keypassword)
+                    message["processed"]=True
                 elif message["command"]=="START_ENGINE":
                     self.start_engine()
+                    message["processed"]=True
+                elif message["command"]=="STOP_ENGINE":
+                    self.stop_engine()
+                    message["processed"]=True
                 elif message["command"]=="SELECT_GEAR":
                     self.select_gear(message["data"])
+                    message["processed"]=True
+                elif message["command"]=="REFUEL":
+                    self.refuel(message["data"])
+                    message["processed"]=True
+                elif message["command"]=="DRIVE_MILES":
+                    self.drive_miles(message["data"])
+                    message["processed"]=True
+                elif message["command"]=="LOCK_CAR":
+                    self.car.lock_doors()
+                    message["processed"]=True
 
 
 
@@ -102,3 +117,6 @@ class ECU:
             self.car.refuel(amount)
             with open("fuel.txt", "w") as file:
                 file.write(str(self.car.fuel))
+
+    def dashboard(self):
+        self.car.display_dashboard()

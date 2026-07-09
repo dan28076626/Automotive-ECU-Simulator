@@ -58,7 +58,7 @@ class Car:
         self.speed = 30
         self.rpm = 2000
 
-        print(f"Car: Drove 1 miles | Fuel: {self.fuel}% | Mileage: {self.odometer} miles")
+        print(f"Car: Drove 1 mile | Fuel: {self.fuel}% | Mileage: {self.odometer} miles")
 
     def refuel(self, amount):
         self.fuel = min(100, self.fuel + amount)

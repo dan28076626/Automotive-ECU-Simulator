@@ -12,14 +12,14 @@ class CANBus:
     def __init__(self):
         self.messages=[]
         
-    def send_message(self, sender, receiver, message, data):
+    def send_message(self, sender, receiver, command, data):
         can_id=self.id_codes.get(receiver.upper(),"0x000")
         can_message ={
              "id": can_id,
             "timestamp": dt.now().strftime("%d/%m/%Y %H:%M:%S"),   
             "sender": sender,
             "receiver": receiver,
-            "command": message,
+            "command": command,
             "data": data,
             "processed": False
 
