@@ -115,6 +115,7 @@ class ECU:
             print("Fuel tank already full")
         else:
             self.car.refuel(amount)
+            self.update_dashboard()
             with open("fuel.txt", "w") as file:
                 file.write(str(self.car.fuel))
 
@@ -124,4 +125,6 @@ class ECU:
         self.canbus.send_message("ECU", "DASHBOARD", "UPDATE_GEAR", self.car.gear)
         self.canbus.send_message("ECU", "DASHBOARD", "UPDATE_SPEED", self.car.speed)
         self.canbus.send_message("ECU", "DASHBOARD", "UPDATE_ODOMETER", self.car.odometer)
-
+        self.canbus.send_message("ECU", "DASHBOARD", "UPDATE_ENGINE", self.car.engine_running)
+        self.canbus.send_message("ECU", "DASHBOARD", "UPDATE_DOORS", self.car.doors_locked)
+        
