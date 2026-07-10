@@ -1,13 +1,13 @@
 from car import Car
-from ecu import ECU
-from canbus import CANBus
+from modules.ecu import ECU
+from modules.canbus import CANBus
 my_car = Car()
 bus = CANBus()
 my_ecu = ECU("ABC123", my_car,bus)
 
 
 print("Automotive ECU Simulator Started")
-from canbus import CANBus
+from modules.canbus import CANBus
 
 
 

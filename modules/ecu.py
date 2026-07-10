@@ -1,5 +1,5 @@
 from car import Car
-from canbus import CANBus
+from modules.canbus import CANBus
 
 class ECU:
     def __init__(self, keypassword, car,canbus):
@@ -118,5 +118,10 @@ class ECU:
             with open("fuel.txt", "w") as file:
                 file.write(str(self.car.fuel))
 
-    def dashboard(self):
-        self.car.display_dashboard()
+    def update_dashboard(self):
+        self.canbus.send_message("ECU", "DASHBOARD", "UPDATE_FUEL", self.car.fuel)
+        self.canbus.send_message("ECU", "DASHBOARD", "UPDATE_RPM", self.car.rpm)
+        self.canbus.send_message("ECU", "DASHBOARD", "UPDATE_GEAR", self.car.gear)
+        self.canbus.send_message("ECU", "DASHBOARD", "UPDATE_SPEED", self.car.speed)
+        self.canbus.send_message("ECU", "DASHBOARD", "UPDATE_ODOMETER", self.car.odometer)
+

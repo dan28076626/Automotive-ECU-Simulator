@@ -52,7 +52,6 @@ class Car:
             self.speed = 0
             print("Car: No fuel. Engine stalled.")
             return
-
         self.odometer += 1
         self.fuel = max(0, self.fuel - 5)
         self.speed = 30
@@ -64,13 +63,4 @@ class Car:
         self.fuel = min(100, self.fuel + amount)
         print(f"Car: Refuelled. Fuel is now {self.fuel}%")
 
-    def display_dashboard(self):
-        print("\n--- DASHBOARD ---")
-        print(f"Doors locked: {self.doors_locked}")
-        print(f"Engine running: {self.engine_running}")
-        print(f"Gear: {self.gear}")
-        print(f"Fuel: {self.fuel}%")
-        print(f"Odometer: {self.odometer} miles")
-        print(f"Speed: {self.speed} mph")
-        print(f"RPM: {self.rpm}")
-        print("-----------------\n")
+   
