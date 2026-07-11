@@ -14,10 +14,9 @@ class ECU:
 
     def get_canbus(self):
         for message in self.canbus.messages:
-            if message["id"]=="0x101":
+            if message["id"]=="0x101" and not message["processed"]:
                 if message["command"]=="UNLOCK_CAR":
-                    keypassword=input("Enter keyfobsignal: ")
-                    self.unlock_car(keypassword)
+                    self.unlock_car(message["data"])
                     message["processed"]=True
                 elif message["command"]=="START_ENGINE":
                     self.start_engine()
@@ -49,6 +48,7 @@ class ECU:
     def start_engine(self):
         if not self.car.doors_locked and self.car.fuel>0 and self.car.gear=="P":
             self.car.set_engine(True)
+            print("Car started")
         elif self.car.doors_locked:
             print("Cannot start if the door is locked")
 
