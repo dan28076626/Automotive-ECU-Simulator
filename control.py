@@ -22,24 +22,21 @@ while True:
         bus.send_message("Driver", "ECU", "LOCK_CAR", "NONE")
     elif opt=="3":
         bus.send_message("Driver", "ECU", "START_ENGINE", "NONE")
-        dashboard.display_dashboard()
     elif opt=="4":
         bus.send_message("Driver", "ECU", "STOP_ENGINE", "NONE")
-        dashboard.display_dashboard()
     elif opt=="5":
         amount=int(input("Enter amount to refuel"))
         bus.send_message("Driver", "ECU", "REFUEL", amount)
-        dashboard.display_dashboard()
     elif opt=="6":
         miles=int(input("How many miles do you want to drive"))
         bus.send_message("Driver", "ECU", "DRIVE_MILES", miles)
-        dashboard.display_dashboard()
     elif opt=="7":
         gear=input("What gear do you want to use? ")
         bus.send_message("Driver", "ECU", "SELECT_GEAR", gear)
-        dashboard.display_dashboard()
     elif opt=="8":
         print("Exiting simulator")
         s.exit()
     my_ecu.get_canbus()
     dashboard.getcanbus()
+    dashboard.display_dashboard()
+    

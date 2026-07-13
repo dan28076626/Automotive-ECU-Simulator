@@ -11,6 +11,35 @@ class Dashboard():
         self.doors_locked=False
         self.engine_running=False
 
+
+    def getcanbus(self):
+        for message in self.canbus.messages:
+            if message["id"] == "0x102" and not message["processed"]:
+                print("Dashboard received:", message)
+
+                if message["command"] == "UPDATE_RPM":  
+                    self.rpm = message["data"]
+
+                elif message["command"] == "UPDATE_FUEL":
+                    self.fuel = message["data"]
+
+                elif message["command"] == "UPDATE_GEAR":
+                    self.gear = message["data"]
+
+                elif message["command"] == "UPDATE_SPEED":
+                    self.speed = message["data"]
+
+                elif message["command"] == "UPDATE_ODOMETER":
+                    self.odometer = message["data"]
+
+                elif message["command"] == "UPDATE_ENGINE":
+                    self.engine_running = message["data"]
+
+                elif message["command"] == "UPDATE_DOORS":
+                    self.doors_locked = message["data"]
+
+                message["processed"] = True
+
     def display_dashboard(self):
         print("\n--- DASHBOARD ---")
         print(f"Doors locked: {self.doors_locked}")
@@ -22,20 +51,4 @@ class Dashboard():
         print(f"RPM: {self.rpm}")
         print("-----------------\n")
 
-    def getcanbus(self):
-        for message in self.canbus.messages:
-            if message["id"]=="0x102":
-                if message["command"]=="UPDATE_RPM":
-                    self.rpm=message["data"]
-                elif message["command"]=="UPDATE_FUEL":
-                    self.fuel=message["data"]
-                elif message["command"]=="UPDATE_ENGINE":
-                    self.engine_running=message["data"]
-                elif message["command"]=="DOORS_UNLOCKED":
-                    self.doors_locked=message["data"]
-                elif message["command"]=="UPDATE_ODOMETER":
-                    self.odometer=message["data"]
-                elif message["command"]=="UPDATE_DOORS":
-                    self.doors_locked=message["data"]
-                
-                message["processed"]=True
+

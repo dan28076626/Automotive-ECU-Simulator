@@ -1,20 +1,16 @@
-from car import Car
-from modules.canbus import CANBus
+
 
 class ECU:
     def __init__(self, keypassword, car,canbus):
         self.correctkeyhex = keypassword
         self.car = car
         self.canbus=canbus
-        try:
-            with open("fuel.txt", "r") as file:
-                self.car.fuel=int(file.read())  
-        except FileNotFoundError:
-            self.car.fuel=100
+        with open("fuel.txt", "r") as file:
+            self.car.fuel = int(file.read())
 
     def get_canbus(self):
         for message in self.canbus.messages:
-            if message["id"]=="0x101" and not message["processed"]:
+            if message["id"]=="0x101" and not message["processed"] and message["receiver"]=="ECU":
                 if message["command"]=="UNLOCK_CAR":
                     self.unlock_car(message["data"])
                     message["processed"]=True
@@ -48,6 +44,7 @@ class ECU:
     def start_engine(self):
         if not self.car.doors_locked and self.car.fuel>0 and self.car.gear=="P":
             self.car.set_engine(True)
+            self.update_dashboard()
             print("Car started")
         elif self.car.doors_locked:
             print("Cannot start if the door is locked")
@@ -61,6 +58,7 @@ class ECU:
     def stop_engine(self):
         if not self.car.engine_running:
             print("Cannot stop the engine if it is already off")
+            self.update_dashboard()
         elif self.car.gear !="P":
             print("Cannot turn the car off if it is in drive")
         else:
@@ -78,6 +76,7 @@ class ECU:
             print("Cannot switch to park if car is moving")
         else:
             self.car.set_gear(gear)
+            self.update_dashboard()
 
     def drive_one_mile(self):
         if not self.car.engine_running:
@@ -103,6 +102,7 @@ class ECU:
                 self.drive_one_mile()
                 if self.car.fuel<5:
                     print("Does not have enough fuel to drive one more mile")
+                self.update_dashboard()
             with open("fuel.txt", "w") as file:
                 file.write(str(self.car.fuel))
 
