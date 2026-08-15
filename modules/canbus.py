@@ -10,7 +10,7 @@ class CANBus:
         }
 
     def __init__(self):
-        self.messages=[]
+        self.messages=[]        
         
     def send_message(self, sender, receiver, command, data):
         can_id=self.id_codes.get(receiver.upper(),"0x000")
@@ -24,6 +24,15 @@ class CANBus:
             "processed": False
 
         }
+
+    def get_messages(self, receiver):
+        new_messages = []
+
+        for message in self.messages:
+            if not message["processed"] and message["receiver"] == receiver:
+                new_messages.append(message)
+
+        return new_messages
 
            
                

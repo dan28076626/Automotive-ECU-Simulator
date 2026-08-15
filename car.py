@@ -63,4 +63,7 @@ class Car:
         self.fuel = min(100, self.fuel + amount)
         print(f"Car: Refuelled. Fuel is now {self.fuel}%")
 
+    def accelerate(self,target_speed):
+        acceleration_rate=0.0452
+        
         

@@ -9,29 +9,29 @@ class ECU:
             self.car.fuel = int(file.read())
 
     def get_canbus(self):
-        for message in self.canbus.messages:
-            if message["id"]=="0x101" and not message["processed"] and message["receiver"]=="ECU":
-                if message["command"]=="UNLOCK_CAR":
-                    self.unlock_car(message["data"])
-                    message["processed"]=True
-                elif message["command"]=="START_ENGINE":
-                    self.start_engine()
-                    message["processed"]=True
-                elif message["command"]=="STOP_ENGINE":
-                    self.stop_engine()
-                    message["processed"]=True
-                elif message["command"]=="SELECT_GEAR":
-                    self.select_gear(message["data"])
-                    message["processed"]=True
-                elif message["command"]=="REFUEL":
-                    self.refuel(message["data"])
-                    message["processed"]=True
-                elif message["command"]=="DRIVE_MILES":
-                    self.drive_miles(message["data"])
-                    message["processed"]=True
-                elif message["command"]=="LOCK_CAR":
-                    self.car.lock_doors()
-                    message["processed"]=True
+        for message in self.canbus.get_messages("ECU"):
+            
+            if message["command"]=="UNLOCK_CAR":
+                self.unlock_car(message["data"])
+                message["processed"]=True
+            elif message["command"]=="START_ENGINE":
+                self.start_engine()
+                message["processed"]=True
+            elif message["command"]=="STOP_ENGINE":
+                self.stop_engine()
+                message["processed"]=True
+            elif message["command"]=="SELECT_GEAR":
+                self.select_gear(message["data"])
+                message["processed"]=True
+            elif message["command"]=="REFUEL":
+                self.refuel(message["data"])
+                message["processed"]=True
+            elif message["command"]=="DRIVE_MILES":
+                self.drive_miles(message["data"])
+                message["processed"]=True
+            elif message["command"]=="LOCK_CAR":
+                self.car.lock_doors()
+                message["processed"]=True
 
 
 
