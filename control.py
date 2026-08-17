@@ -34,6 +34,9 @@ while True:
         gear=input("What gear do you want to use? ")
         bus.send_message("Driver", "ECU", "SELECT_GEAR", gear)
     elif opt=="8":
+        target_speed=int(input("What speed do you want to travel at"))
+        bus.send_message("Driver", "ECU", "ACCELERATE", target_speed)
+    elif opt=="9":
         print("Exiting simulator")
         s.exit()
     my_ecu.get_canbus()

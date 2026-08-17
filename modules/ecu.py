@@ -5,12 +5,11 @@ class ECU:
         self.correctkeyhex = keypassword
         self.car = car
         self.canbus=canbus
-        with open("fuel.txt", "r") as file:
+        with open("logs/fuel.txt", "r") as file:
             self.car.fuel = int(file.read())
 
     def get_canbus(self):
         for message in self.canbus.get_messages("ECU"):
-            
             if message["command"]=="UNLOCK_CAR":
                 self.unlock_car(message["data"])
                 message["processed"]=True
@@ -31,6 +30,9 @@ class ECU:
                 message["processed"]=True
             elif message["command"]=="LOCK_CAR":
                 self.car.lock_doors()
+                message["processed"]=True
+            elif message["command"]=="ACCELERATE":
+                self.accelerate(message["data"])
                 message["processed"]=True
 
 
@@ -118,6 +120,21 @@ class ECU:
             self.update_dashboard()
             with open("fuel.txt", "w") as file:
                 file.write(str(self.car.fuel))
+
+    def accelerate(self,target_speed):
+        if self.car.engine_running==False:
+            print("Cannot accelerate while engine is off")
+        elif self.car.gear!="D":
+            print("Cannot accelerate while the gear is not in drive")
+        elif target_speed>self.car.max_speed:
+            print("Cannot accelerate past the maximum speed of the car")
+        elif target_speed<=self.car.speed:
+            print("Cannot accelerate lower than current speed")
+        elif target_speed<0:
+            print("Cannot set a target speed of below 0mph")
+        elif target_speed>self.car.speed:
+            self.car.accelerate(target_speed)
+            self.update_dashboard()
 
     def update_dashboard(self):
         self.canbus.send_message("ECU", "DASHBOARD", "UPDATE_FUEL", self.car.fuel)

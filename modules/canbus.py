@@ -24,6 +24,7 @@ class CANBus:
             "processed": False
 
         }
+        self.messages.append(can_message)
 
     def get_messages(self, receiver):
         new_messages = []
@@ -31,6 +32,7 @@ class CANBus:
         for message in self.messages:
             if not message["processed"] and message["receiver"] == receiver:
                 new_messages.append(message)
+                
 
         return new_messages
 

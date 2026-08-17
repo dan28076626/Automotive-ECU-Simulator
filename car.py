@@ -7,6 +7,8 @@ class Car:
         self.rpm = 0
         self.speed = 0
         self.gear = "P"
+        self.max_speed=217
+        self.seconds_per_mph=0.0452
 
     def unlock_doors(self):
         self.doors_locked = False
@@ -64,6 +66,11 @@ class Car:
         print(f"Car: Refuelled. Fuel is now {self.fuel}%")
 
     def accelerate(self,target_speed):
-        acceleration_rate=0.0452
-        
+       
+        speed_change=target_speed-self.speed
+        acceleration_time=speed_change*self.seconds_per_mph
+        print(speed_change)
+        print(acceleration_time)
+
+
         

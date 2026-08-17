@@ -13,11 +13,12 @@ class Dashboard():
 
 
     def getcanbus(self):
-        for message in self.canbus.get_messages["DASHBOARD"]:
+        for message in self.canbus.get_messages("DASHBOARD"):
             if message["id"] == "0x102" and not message["processed"]:
 
                 if message["command"] == "UPDATE_RPM":  
                     self.rpm = message["data"]
+                    print("Recieved")
 
                 elif message["command"] == "UPDATE_FUEL":
                     self.fuel = message["data"]
