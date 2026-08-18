@@ -99,7 +99,7 @@ class Car:
         percentage_used=(gallons_used/self.tank_capacity)*100
         self.fuel-=percentage_used
         with open("logs/fuel.txt", "w") as file:
-            file.write(self.fuel)
+            file.write(str(self.fuel))
 
 
 
