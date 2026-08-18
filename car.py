@@ -98,10 +98,20 @@ class Car:
         gallons_used=distance/self.mpg
         percentage_used=(gallons_used/self.tank_capacity)*100
         self.fuel-=percentage_used
+        with open("logs/fuel.txt", "w") as file:
+            file.write(self.fuel)
 
 
+
+    def travel(self,real_seconds):
+
+        # --- Calculate simulated time and convert it to hours ---
+        simulated_time=(real_seconds*self.time_scale)/3600
+
+        # --- Calculate Distance Travelled --- 
+        distance=self.speed*simulated_time
         
-        
+        # --- Update Values ---
 
 
         

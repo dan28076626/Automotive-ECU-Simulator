@@ -132,9 +132,27 @@ class ECU:
             print("Cannot accelerate lower than current speed")
         elif target_speed<0:
             print("Cannot set a target speed of below 0mph")
+        elif self.car.fuel<=0:
+            print("Cannot accelerate if there is no fuel")
         elif target_speed>self.car.speed:
             self.car.accelerate(target_speed)
             self.update_dashboard()
+
+    def travel(self,real_seconds):
+        if not self.car.engine_running:
+            print("Cannot travel while the engine is off")
+        elif self.car.gear!="D":
+            print("Cannot travel while the gear is not in drive")
+        elif self.car.fuel<=0:
+            print("Cannot travel while there is no fuel")
+        elif real_seconds<0:
+            print("Cannot travel for less then 0 seconds")
+        else:
+            self.car.travel(real_seconds)
+            self.update_dashboard()
+
+        
+
 
     def update_dashboard(self):
         self.canbus.send_message("ECU", "DASHBOARD", "UPDATE_FUEL", self.car.fuel)
