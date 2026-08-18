@@ -6,7 +6,7 @@ class ECU:
         self.car = car
         self.canbus=canbus
         with open("logs/fuel.txt", "r") as file:
-            self.car.fuel = int(file.read())
+            self.car.fuel = float(file.read())
 
     def get_canbus(self):
         for message in self.canbus.get_messages("ECU"):
