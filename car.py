@@ -9,6 +9,9 @@ class Car:
         self.gear = "P"
         self.max_speed=217
         self.seconds_per_mph=0.0452
+        self.time_scale=2
+        self.mpg=15.7
+        self.tank_capacity=18.26
 
     def unlock_doors(self):
         self.doors_locked = False
@@ -66,11 +69,39 @@ class Car:
         print(f"Car: Refuelled. Fuel is now {self.fuel}%")
 
     def accelerate(self,target_speed):
-       
+    # ====== ACCELERATION TIME CALCULATION ======
+
+         # --- Speed Change (mph) ---
         speed_change=target_speed-self.speed
-        acceleration_time=speed_change*self.seconds_per_mph
-        print(speed_change)
-        print(acceleration_time)
+
+        #--- Acceleration Time (seconds) ---
+        accel_time_sec=speed_change*self.seconds_per_mph
+
+    # ====== DISTANCE CALCULATION (miles) ======
+
+        # --- Average speed (mph) ---
+        average_speed=(target_speed+self.speed) / 2
+
+        # --- Convert acceleration time to hours ---
+        accel_time_hour=accel_time_sec/3600
+
+        # --- Final Distance Calculation --- 
+        distance=average_speed*accel_time_hour
+
+
+        # --- Update Values --- 
+        self.speed=target_speed
+        self.odometer+=distance
+        self.fuel_used(distance)
+
+    def fuel_used(self,distance):
+        gallons_used=distance/self.mpg
+        percentage_used=(gallons_used/self.tank_capacity)*100
+        self.fuel-=percentage_used
+
+
+        
+        
 
 
         

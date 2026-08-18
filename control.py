@@ -10,7 +10,7 @@ import sys as s
 
 
 print("Automotive ECU Simulator Started")
-print("Options: \n 1. Unlock doors \n 2. Lock doors \n 3. Start engine \n 4. Stop engine \n 5. Reufel \n 6.Drive \n 7. Select gear \n 8.Exit")
+print("Options: \n 1. Unlock doors \n 2. Lock doors \n 3. Start engine \n 4. Stop engine \n 5. Reufel \n 6.Drive \n 7. Select gear \n 8.Accelerate \n 9. Exit")
 while True:
   
     opt=input("Choose an option (number)")
