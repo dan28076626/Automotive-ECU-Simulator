@@ -34,6 +34,9 @@ class ECU:
             elif message["command"]=="ACCELERATE":
                 self.accelerate(message["data"])
                 message["processed"]=True
+            elif message["command"]=="TRAVEL":
+                self.travel(message["data"])
+                message["processed"]=True
 
 
 
@@ -147,6 +150,8 @@ class ECU:
             print("Cannot travel while there is no fuel")
         elif real_seconds<0:
             print("Cannot travel for less then 0 seconds")
+        elif self.car.speed<=0:
+            print("Cannot travel while car is stationary")
         else:
             self.car.travel(real_seconds)
             self.update_dashboard()
