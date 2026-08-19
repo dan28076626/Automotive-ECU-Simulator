@@ -12,6 +12,7 @@ class Car:
         self.time_scale=2
         self.mpg=15.7
         self.tank_capacity=18.26
+        self.decel_seconds_per_mph = 0.5
 
     def unlock_doors(self):
         self.doors_locked = False
@@ -134,5 +135,26 @@ class Car:
 
         # --- Update Values ---
         self.odometer+=actual_distance
+
+    def decelerate(self,target_speed):
+
+        # --- Calculate Speec change and deceleration time (Sec)
+        speed_change=self.speed-target_speed
+        decel_time=speed_change*self.decel_seconds_per_mph
+
+    # ====== DISTANCE CALCULATION ======
+
+        # --- Average Speed ---
+        average_speed=(self.speed+target_speed)/2
+
+        # --- Convert Deceleration Time per Hours ---
+        decel_time_hours=decel_time/3600
+
+        # --- Distance Travelled ---
+        distance=average_speed*decel_time_hours
+
+        # --- Update Values ---
+        self.odometer+=distance
+        self.fuel_used(distance)
 
         
