@@ -46,7 +46,7 @@ class Dashboard():
         print(f"Engine running: {self.engine_running}")
         print(f"Gear: {self.gear}")
         print(f"Fuel: {self.fuel:.2f}%")
-        print(f"Odometer: {self.odometer} miles")
+        print(f"Odometer: {self.odometer:.2f} miles")
         print(f"Speed: {self.speed} mph")
         print(f"RPM: {self.rpm}")
         print("-----------------\n")

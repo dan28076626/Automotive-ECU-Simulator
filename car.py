@@ -95,12 +95,30 @@ class Car:
         self.fuel_used(distance)
 
     def fuel_used(self,distance):
-        gallons_used=distance/self.mpg
-        percentage_used=(gallons_used/self.tank_capacity)*100
-        self.fuel-=percentage_used
-        with open("logs/fuel.txt", "w") as file:
-            file.write(str(self.fuel))
+        # --- Find gallons left in the tank ---
+        gallons_left=self.tank_capacity*(self.fuel/100)
 
+        # --- Find the maximum distance the car can travel ---
+        maximum_distance=gallons_left*self.mpg
+
+        # --- Check whether the car can travel the distance (dependent on the user's input + fuel in the car) ---
+        if distance>maximum_distance:
+            print("Car stalled : fuel reached 0%")
+            self.fuel=0
+            self.engine_running=False
+            self.speed=0
+            self.rpm=0
+            with open("logs/fuel.txt", "w") as file:
+                file.write(str(self.fuel))
+            return maximum_distance
+        # --- Calculate fuel used if the car can make the distance ---
+        else:
+            gallons_used=distance/self.mpg
+            percentage_used=(gallons_used/self.tank_capacity)*100
+            self.fuel-=percentage_used
+            with open("logs/fuel.txt", "w") as file:
+                file.write(str(self.fuel))
+            return distance
 
 
     def travel(self,real_seconds):
@@ -110,8 +128,11 @@ class Car:
 
         # --- Calculate Distance Travelled --- 
         distance=self.speed*simulated_time
+
+        # --- Get actual distance travelled ---
+        actual_distance=self.fuel_used(distance)
+
         # --- Update Values ---
-        self.odometer+=distance
-        self.fuel_used(distance)
+        self.odometer+=actual_distance
 
         
