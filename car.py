@@ -111,6 +111,7 @@ class Car:
         # --- Calculate Distance Travelled --- 
         distance=self.speed*simulated_time
         # --- Update Values ---
-
+        self.odometer+=distance
+        self.fuel_used(distance)
 
         
