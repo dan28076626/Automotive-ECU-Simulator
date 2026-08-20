@@ -2,10 +2,15 @@ from car import Car
 from modules.ecu import ECU
 from modules.canbus import CANBus
 from modules.dashboard import Dashboard
+from gearbox import gearbox
+from modules.tcm import TCM
+
 my_car = Car()
 bus = CANBus()
 my_ecu = ECU("ABC123", my_car,bus)
 dashboard=Dashboard(bus)
+gearbox=gearbox()
+tcm=TCM(my_car,gearbox,bus)
 import sys as s
 
 
