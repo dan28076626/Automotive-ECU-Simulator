@@ -172,6 +172,22 @@ class ECU:
             self.car.decelerate(target_speed)
             self.update_dashboard()     
 
+    def brake(self,brake_pressure,target_speed):
+        if not self.car.engine_running:
+            print("Cannot brake while the engine is off")
+        elif self.car.gear!="D" and self.car.gear!="N":
+            print("Cannot brake if the car is not in drive or neutral")
+        elif target_speed>=self.car.speed:
+            print("Cannot brake when the target speed is higher than/ the same as the current speed")
+        elif target_speed<0:
+            print("Cannot brake when the target speed is lower than 0")
+        elif brake_pressure<=0 or brake_pressure>100:
+            print("Enter brake pressure percentage between 0 and 100")
+        else:
+            self.car.brake(brake_pressure,target_speed)
+            self.update_dashboard()    
+
+
 
     def update_dashboard(self):
         self.canbus.send_message("ECU", "DASHBOARD", "UPDATE_FUEL", self.car.fuel)
