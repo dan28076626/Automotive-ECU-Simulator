@@ -4,6 +4,17 @@ class TCM:
         self.gearbox=gearbox
         self.canbus=canbus
 
+    def getcanbus(self):
+        for message in self.canbus.get_messages("TCM"):
+            if message["command"]=="CHANGE_GEAR":
+                self.shift(message["data"])
+                message["processed"]=True
+
+
+
+
+
+            
     def upshift(self):
         if self.gearbox.current_gear==7:
             print("Cannot upshift to a gear higher than 7")
@@ -16,11 +27,11 @@ class TCM:
         else:
             self.gearbox.downshift()
 
-    def shift(self):
-        if self.car.gear=="R":
+    def shift(self, selector):
+        if selector=="R":
             self.gearbox.current_gear=-1
-        if self.car.gear=="P" or self.car.gear=="N":
+        if selector=="P" or selector=="N":
             self.gearbox.current_gear=0
-        if self.car.gear=="D":
+        if selector=="D":
             self.gearbox.current_gear=1
-
+        print(self.gearbox.current_gear)

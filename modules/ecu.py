@@ -91,6 +91,7 @@ class ECU:
         else:
             self.car.set_gear(gear)
             self.update_dashboard()
+            self.canbus.send_message("ECU", "TCM", "CHANGE_GEAR", self.car.gear)
 
     def drive_one_mile(self):
         if not self.car.engine_running:
