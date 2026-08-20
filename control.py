@@ -10,7 +10,7 @@ import sys as s
 
 
 print("Automotive ECU Simulator Started")
-print("Options: \n 1. Unlock doors \n 2. Lock doors \n 3. Start engine \n 4. Stop engine \n 5. Reufel \n 6.Drive \n 7. Select gear \n 8.Accelerate \n 9. Travel \n 10. Exit")
+print("Options: \n 1. Unlock doors \n 2. Lock doors \n 3. Start engine \n 4. Stop engine \n 5. Reufel \n 6.Drive \n 7. Select gear \n 8.Accelerate \n 9. Travel \n 10. Decelerate \n 11. Brake \n 12. Exit" )
 while True:
   
     opt=input("Choose an option (number)")
@@ -34,12 +34,15 @@ while True:
         gear=input("What gear do you want to use? ")
         bus.send_message("Driver", "ECU", "SELECT_GEAR", gear)
     elif opt=="8":
-        target_speed=int(input("What speed do you want to travel at"))
+        target_speed=int(input("What speed do you want accelerate to"))
         bus.send_message("Driver", "ECU", "ACCELERATE", target_speed)
     elif opt=="9":
         real_seconds=int(input("How long do you want to travel for at this speed"))
         bus.send_message("Driver", "ECU", "TRAVEL", real_seconds)
     elif opt=="10":
+        target_speed=int(input("What speed do you want to decelerate to"))
+        bus.send_message("Driver", "ECU", "DECELERATE", target_speed)
+    elif opt=="12":
         print("Exiting simulator")
         s.exit()
     my_ecu.get_canbus()

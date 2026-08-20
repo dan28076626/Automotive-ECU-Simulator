@@ -162,15 +162,15 @@ class ECU:
     def decelerate(self,target_speed):
         if not self.car.engine_running:
             print("Cannot decelerate while the engine is off")
-        elif self.car.gear!="D" or self.car.gear!="N":
+        elif self.car.gear!="D" and self.car.gear!="N":
             print("Cannot decelerate if the car is not in drive or neutral")
-        elif target_speed>self.car.speed:
-            print("Cannot decelerate when the target speed is higher than the current speed")
+        elif target_speed>=self.car.speed:
+            print("Cannot decelerate when the target speed is higher than/ the same as the current speed")
         elif target_speed<0:
             print("Cannot decelerate when the target speed is lower than 0")
         else:
             self.car.decelerate(target_speed)
-            self.update_dashboard     
+            self.update_dashboard()     
 
 
     def update_dashboard(self):
