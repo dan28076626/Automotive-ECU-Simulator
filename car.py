@@ -2,17 +2,18 @@ class Car:
     def __init__(self):
         self.doors_locked = True
         self.engine_running = False
-        self.fuel=100
-        self.odometer = 0
+        self.fuel=100 # %
+        self.odometer = 0 # miles
         self.rpm = 0
-        self.speed = 0
+        self.speed = 0 # miles
         self.gear = "P"
-        self.max_speed=217
-        self.seconds_per_mph=0.0452
-        self.time_scale=2
+        self.max_speed=217 #km/h
+        self.seconds_per_mph=0.0452 # mph
+        self.time_scale=2 
         self.mpg=15.7
-        self.tank_capacity=18.26
-        self.decel_seconds_per_mph = 0.5
+        self.tank_capacity=18.26 # gallons
+        self.decel_seconds_per_mph = 0.5 # mph
+        self.max_braking_decel=12.5 # m/s^2
 
     def unlock_doors(self):
         self.doors_locked = False
@@ -78,6 +79,8 @@ class Car:
         #--- Acceleration Time (seconds) ---
         accel_time_sec=speed_change*self.seconds_per_mph
 
+    # ==================================================
+
     # ====== DISTANCE CALCULATION (miles) ======
 
         # --- Average speed (mph) ---
@@ -89,7 +92,7 @@ class Car:
         # --- Final Distance Calculation --- 
         distance=average_speed*accel_time_hour
 
-
+    # ===========================================
         # --- Update Values --- 
         self.speed=target_speed
         self.odometer+=distance
@@ -143,7 +146,6 @@ class Car:
         decel_time=speed_change*self.decel_seconds_per_mph
 
     # ====== DISTANCE CALCULATION ======
-
         # --- Average Speed ---
         average_speed=(self.speed+target_speed)/2
 
@@ -157,4 +159,50 @@ class Car:
         self.odometer+=distance
         self.fuel_used(distance)
         self.speed=target_speed
+    # ===============================================
+
+    def braking(self,brake_pressure, target_speed):
+        # --- Brake Pressure as a decimal ---
+        act_brakepressure=brake_pressure/100
+
+        # --- Find actual deceleration in m/s ---
+        act_decel=self.max_braking_decel*act_brakepressure
+
+    # ====== VELOCITY CALCULATION ======
+        # --- Convert current speed and target speed to m/s ---
+        current_speed_ms=(self.speed*1609.344)/3600 # m/s
+        target_speed_ms=(target_speed*1609.344)/3600 # m/s
+
+        # --- Find velocity change ---
+        velocity_change=current_speed_ms-target_speed_ms
+
+
+    # ======================================================
+
+    # ====== BRAKE DISTANCE CALCULATION ======
+
+        # --- Find Brake Time ---
+        braking_time=velocity_change/act_decel
+
+        # --- Find average velocity ---
+        average_velocity=(current_speed_ms+target_speed_ms)/2
+
+        # --- Distance Travelled (meters) ---
+        distance_m=average_velocity*braking_time
+
+        # --- Convert Distance Travelled to miles ---
+        distance_miles=distance_m/1609.344
+
+    # ============================================================
+
+        # --- Update Values ---
+        self.odometer+=distance_miles
+        self.speed=target_speed
+        
+
+        
+
+
+    
+
         
