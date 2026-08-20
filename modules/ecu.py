@@ -190,7 +190,7 @@ class ECU:
         elif brake_pressure<=0 or brake_pressure>100:
             print("Enter brake pressure percentage between 0 and 100")
         else:
-            self.car.brake(brake_pressure,target_speed)
+            self.car.braking(brake_pressure,target_speed)
             self.update_dashboard()    
 
 
