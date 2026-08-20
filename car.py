@@ -138,7 +138,7 @@ class Car:
 
     def decelerate(self,target_speed):
 
-        # --- Calculate Speec change and deceleration time (Sec)
+        # --- Calculate Speed change and deceleration time (Sec)
         speed_change=self.speed-target_speed
         decel_time=speed_change*self.decel_seconds_per_mph
 
@@ -156,5 +156,5 @@ class Car:
         # --- Update Values ---
         self.odometer+=distance
         self.fuel_used(distance)
-
+        self.speed=target_speed
         

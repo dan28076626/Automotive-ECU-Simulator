@@ -37,6 +37,9 @@ class ECU:
             elif message["command"]=="TRAVEL":
                 self.travel(message["data"])
                 message["processed"]=True
+            elif message["command"]=="DECELERATE":
+                self.decelerate(message["data"])
+                message["processed"]=True
 
 
 
@@ -156,7 +159,18 @@ class ECU:
             self.car.travel(real_seconds)
             self.update_dashboard()
 
-        
+    def decelerate(self,target_speed):
+        if not self.car.engine_running:
+            print("Cannot decelerate while the engine is off")
+        elif self.car.gear!="D" or self.car.gear!="N":
+            print("Cannot decelerate if the car is not in drive or neutral")
+        elif target_speed>self.car.speed:
+            print("Cannot decelerate when the target speed is higher than the current speed")
+        elif target_speed<0:
+            print("Cannot decelerate when the target speed is lower than 0")
+        else:
+            self.car.decelerate(target_speed)
+            self.update_dashboard     
 
 
     def update_dashboard(self):
