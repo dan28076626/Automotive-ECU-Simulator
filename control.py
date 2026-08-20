@@ -42,6 +42,14 @@ while True:
     elif opt=="10":
         target_speed=int(input("What speed do you want to decelerate to"))
         bus.send_message("Driver", "ECU", "DECELERATE", target_speed)
+    elif opt=="11":
+        target_speed=int(input("What speed do you want to brake to"))
+        brake_pressure=int(input("How much brakes do you want to use (as a percentage)"))
+        brake_data={
+            "brake_pressure":brake_pressure,
+            "target_speed": target_speed
+        }
+        bus.send_message("Driver", "ECU", "BRAKE", brake_data)
     elif opt=="12":
         print("Exiting simulator")
         s.exit()

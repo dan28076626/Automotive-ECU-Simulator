@@ -40,6 +40,12 @@ class ECU:
             elif message["command"]=="DECELERATE":
                 self.decelerate(message["data"])
                 message["processed"]=True
+            elif message["command"]=="BRAKE":
+                self.brake(
+                    message["data"]["brake_pressure"],
+                    message["data"]["target_speed"]
+                           )
+                message["processed"]=True
 
 
 
