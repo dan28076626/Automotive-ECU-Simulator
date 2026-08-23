@@ -1,9 +1,9 @@
 class TCM:
-    def __init__(self , car, gearbox, canbus):
+    def __init__(self , car, gearbox, canbus,wheel):
         self.car=car
         self.gearbox=gearbox
         self.canbus=canbus
-
+        self.wheel=wheel
     def getcanbus(self):
         for message in self.canbus.get_messages("TCM"):
             if message["command"]=="CHANGE_GEAR":
@@ -35,3 +35,11 @@ class TCM:
         if selector=="D":
             self.gearbox.current_gear=1
         print(self.gearbox.current_gear)
+
+    def calculate_engine_rpm(self, speed):
+        self.wheel.calculate_wheel_rpm(speed)
+
+        engine_rpm=self.wheel.rpm*self.gearbox.rear_final*self.gearbox.gear_ratio[self.gearbox.current_gear]
+
+        self.car.rpm=engine_rpm
+        
