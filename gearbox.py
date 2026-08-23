@@ -1,4 +1,4 @@
-class gearbox():
+class Gearbox():
     # 0 is neutral/park | -1 is reverse | 1-7 are forward gears
     def __init__(self):
         self.current_gear=1
