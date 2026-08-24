@@ -20,12 +20,14 @@ class TCM:
             print("Cannot upshift to a gear higher than 7")
         else:
             self.gearbox.upshift()
+            self.calculate_engine_rpm(self.car.speed)
 
     def downshift(self):
         if self.gearbox.current_gear==1:
             print("Cannot downshift to a gear lower than 1")
         else:
             self.gearbox.downshift()
+            self.calculate_engine_rpm(self.car.speed)
 
     def shift(self, selector):
         if selector=="R":
