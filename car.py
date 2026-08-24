@@ -14,6 +14,7 @@ class Car:
         self.tank_capacity=18.26 # gallons
         self.decel_seconds_per_mph = 0.5 # mph
         self.max_braking_decel=12.5 # m/s^2
+        self.max_rpm=8500 #RPM
 
     def unlock_doors(self):
         self.doors_locked = False

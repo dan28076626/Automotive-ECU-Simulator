@@ -23,11 +23,18 @@ class TCM:
             self.calculate_engine_rpm(self.car.speed)
 
     def downshift(self):
-        if self.gearbox.current_gear==1:
+        if self.gearbox.current_gear == 1:
             print("Cannot downshift to a gear lower than 1")
+
         else:
-            self.gearbox.downshift()
-            self.calculate_engine_rpm(self.car.speed)
+            simulated_rpm = self.simulate_engine_rpm()
+
+            if simulated_rpm > self.car.max_rpm:
+                print("Cannot downshift: RPM would be too high")
+
+            else:
+                self.gearbox.downshift()
+                self.calculate_engine_rpm(self.car.speed)
 
     def shift(self, selector):
         if selector=="R":
@@ -44,4 +51,12 @@ class TCM:
         engine_rpm=self.wheel.rpm*self.gearbox.rear_final*self.gearbox.gear_ratio[self.gearbox.current_gear]
 
         self.car.rpm=engine_rpm
+
+    def simulate_engine_rpm(self):
+        self.wheel.calculate_wheel_rpm(self.car.speed)
+        gear=self.gearbox.current_gear-1
+
+        engine_rpm=self.wheel.rpm*self.gearbox.rear_final*self.gearbox.gear_ratio[gear]
+
+        return engine_rpm
         
