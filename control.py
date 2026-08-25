@@ -2,20 +2,22 @@ from car import Car
 from modules.ecu import ECU
 from modules.canbus import CANBus
 from modules.dashboard import Dashboard
-from gearbox import gearbox
+from gearbox import Gearbox
 from modules.tcm import TCM
+from wheels import Wheel
 
+wheel=Wheel()
 my_car = Car()
 bus = CANBus()
 my_ecu = ECU("ABC123", my_car,bus)
 dashboard=Dashboard(bus)
-gearbox=gearbox()
-tcm=TCM(my_car,gearbox,bus)
+gearbox=Gearbox()
+tcm=TCM(my_car,gearbox,bus, wheel)
 import sys as s
 
 
 print("Automotive ECU Simulator Started")
-print("Options: \n 1. Unlock doors \n 2. Lock doors \n 3. Start engine \n 4. Stop engine \n 5. Reufel \n 6.Drive \n 7. Select gear \n 8.Accelerate \n 9. Travel \n 10. Decelerate \n 11. Brake \n 12. Exit" )
+print("Options: \n 1. Unlock doors \n 2. Lock doors \n 3. Start engine \n 4. Stop engine \n 5. Reufel \n 6.Drive \n 7. Select gear \n 8.Accelerate \n 9. Travel \n 10. Decelerate \n 11. Brake \n 12. Upshift \n 13. Downshift \n 14. Exit" )
 while True:
   
     opt=input("Choose an option (number)")
@@ -56,9 +58,14 @@ while True:
         }
         bus.send_message("Driver", "ECU", "BRAKE", brake_data)
     elif opt=="12":
+        bus.send_message("Driver", "TCM", "UPSHIFT", "None")
+    elif opt=="13":
+        bus.send_message("Driver", "TCM", "DOWNSHIFT", "None")
+    elif opt=="14":
         print("Exiting simulator")
         s.exit()
     my_ecu.get_canbus()
+    tcm.getcanbus()
     dashboard.getcanbus()
     dashboard.display_dashboard()
     

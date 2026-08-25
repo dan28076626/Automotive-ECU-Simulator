@@ -8,14 +8,14 @@ class TCM:
 
     def getcanbus(self):
         for message in self.canbus.get_messages("TCM"):
-            if message["command"]=="CHANGE_GEAR":
+            if message["command"] == "CHANGE_GEAR":
                 self.shift(message["data"])
-                message["processed"]=True
-            elif message["command"]=="UPSHIFT":
+            elif message["command"] == "UPSHIFT":
                 self.upshift()
-            elif message["command"]=="DOWNSHIFT":
+            elif message["command"] == "DOWNSHIFT":
                 self.downshift()
 
+            message["processed"] = True
 
 
 
