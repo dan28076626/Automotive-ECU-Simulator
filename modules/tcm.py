@@ -50,10 +50,13 @@ class TCM:
     def shift(self, selector):
         if selector=="R":
             self.gearbox.current_gear=-1
+            self.update_dashboard()
         if selector=="P" or selector=="N":
             self.gearbox.current_gear=0
+            self.update_dashboard()
         if selector=="D":
             self.gearbox.current_gear=1
+            self.update_dashboard()
         print(self.gearbox.current_gear)
 
     def calculate_engine_rpm(self, speed):
