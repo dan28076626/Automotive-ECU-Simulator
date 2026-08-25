@@ -4,12 +4,13 @@ class Dashboard():
         self.canbus=canbus
 
         self.rpm=0
-        self.gear="P"
+        self.gear="0"
         self.fuel=0
         self.odometer=0
         self.speed=0
         self.doors_locked=False
         self.engine_running=False
+        self.gear_selector="P"
 
 
     def getcanbus(self):
@@ -23,8 +24,8 @@ class Dashboard():
                 elif message["command"] == "UPDATE_FUEL":
                     self.fuel = message["data"]
 
-                elif message["command"] == "UPDATE_GEAR":
-                    self.gear = message["data"]
+                elif message["command"] == "UPDATE_GEAR_SELECTOR":
+                    self.gear_selector = message["data"]
 
                 elif message["command"] == "UPDATE_SPEED":
                     self.speed = message["data"]
@@ -38,12 +39,16 @@ class Dashboard():
                 elif message["command"] == "UPDATE_DOORS":
                     self.doors_locked = message["data"]
 
+                elif message["command"]=="UPDATE_GEAR":
+                    self.gear=message["data"]
+
                 message["processed"] = True
 
     def display_dashboard(self):
         print("\n--- DASHBOARD ---")
         print(f"Doors locked: {self.doors_locked}")
         print(f"Engine running: {self.engine_running}")
+        print(f"Gear Selector: {self.gear_selector} ")
         print(f"Gear: {self.gear}")
         print(f"Fuel: {self.fuel:.2f}%")
         print(f"Odometer: {self.odometer:.2f} miles")
