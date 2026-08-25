@@ -78,5 +78,23 @@ def test_unsafe_rpm(tcm):
     assert tcm.car.speed==110
     assert tcm.gearbox.current_gear==3
 
+def test_upper_boundary(tcm):
+    # --- Set gear ---
+    tcm.gearbox.current_gear=7
 
+    # --- Upshift ---
+    tcm.upshift()
+
+    # --- Check results ---
+    assert tcm.gearbox.current_gear==7
+
+def test_lower_boundary(tcm):
+    # --- Set gear ---
+    tcm.gearbox.current_gear=1
+
+    # --- Downshift ---
+    tcm.downshift()
+
+    # --- Check results ---
+    assert tcm.gearbox.current_gear==1
     
