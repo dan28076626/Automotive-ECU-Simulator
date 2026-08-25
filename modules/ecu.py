@@ -199,7 +199,7 @@ class ECU:
     def update_dashboard(self):
         self.canbus.send_message("ECU", "DASHBOARD", "UPDATE_FUEL", self.car.fuel)
         self.canbus.send_message("ECU", "DASHBOARD", "UPDATE_RPM", self.car.rpm)
-        self.canbus.send_message("ECU", "DASHBOARD", "UPDATE_GEAR", self.car.gear)
+        self.canbus.send_message("ECU", "DASHBOARD", "UPDATE_GEAR_SELECTOR", self.car.gear)
         self.canbus.send_message("ECU", "DASHBOARD", "UPDATE_SPEED", self.car.speed)
         self.canbus.send_message("ECU", "DASHBOARD", "UPDATE_ODOMETER", self.car.odometer)
         self.canbus.send_message("ECU", "DASHBOARD", "UPDATE_ENGINE", self.car.engine_running)
