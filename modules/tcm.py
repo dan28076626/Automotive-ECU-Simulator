@@ -14,6 +14,8 @@ class TCM:
                 self.upshift()
             elif message["command"] == "DOWNSHIFT":
                 self.downshift()
+            elif message["command"] == "CHANGE_RPM":
+                self.calculate_engine_rpm(message["data"])
 
             message["processed"] = True
 
@@ -65,6 +67,7 @@ class TCM:
         engine_rpm=self.wheel.rpm*self.gearbox.rear_final*self.gearbox.gear_ratio[self.gearbox.current_gear]
 
         self.car.rpm=engine_rpm
+        self.update_dashboard()
 
     def simulate_engine_rpm(self):
         self.wheel.calculate_wheel_rpm(self.car.speed)

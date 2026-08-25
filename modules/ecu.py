@@ -1,10 +1,11 @@
 
 
 class ECU:
-    def __init__(self, keypassword, car,canbus):
+    def __init__(self, keypassword, car,canbus,tcm):
         self.correctkeyhex = keypassword
         self.car = car
         self.canbus=canbus
+        self.tcm=tcm
         with open("logs/fuel.txt", "r") as file:
             self.car.fuel = float(file.read())
 
@@ -149,6 +150,7 @@ class ECU:
             print("Cannot accelerate if there is no fuel")
         elif target_speed>self.car.speed:
             self.car.accelerate(target_speed)
+            self.canbus.send_message("ECU", "TCM", "CHANGE_RPM", self.car.speed)  
             self.update_dashboard()
 
     def travel(self,real_seconds):
@@ -177,6 +179,7 @@ class ECU:
             print("Cannot decelerate when the target speed is lower than 0")
         else:
             self.car.decelerate(target_speed)
+            self.canbus.send_message("ECU", "TCM", "CHANGE_RPM", self.car.speed)  
             self.update_dashboard()     
 
     def brake(self,brake_pressure,target_speed):
@@ -192,7 +195,8 @@ class ECU:
             print("Enter brake pressure percentage between 0 and 100")
         else:
             self.car.braking(brake_pressure,target_speed)
-            self.update_dashboard()    
+            self.update_dashboard()
+            self.canbus.send_message("ECU", "TCM", "CHANGE_RPM", self.car.speed)    
 
 
 

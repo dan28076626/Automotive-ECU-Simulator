@@ -9,10 +9,12 @@ from wheels import Wheel
 wheel=Wheel()
 my_car = Car()
 bus = CANBus()
-my_ecu = ECU("ABC123", my_car,bus)
-dashboard=Dashboard(bus)
 gearbox=Gearbox()
 tcm=TCM(my_car,gearbox,bus, wheel)
+my_ecu = ECU("ABC123", my_car,bus,tcm)
+dashboard=Dashboard(bus)
+
+
 import sys as s
 
 
