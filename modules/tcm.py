@@ -17,6 +17,9 @@ class TCM:
 
             message["processed"] = True
 
+    def update_dashboard(self):
+        self.canbus.send_message("TCM", "DASHBOARD", "UPDATE_RPM", self.car.rpm)
+        self.canbus.send_message("TCM", "DASHBOARD", "UPDATE_GEAR", self.gearbox.current_gear)
 
 
 
@@ -27,6 +30,7 @@ class TCM:
         else:
             self.gearbox.upshift()
             self.calculate_engine_rpm(self.car.speed)
+            self.update_dashboard()
 
     def downshift(self):
         if self.gearbox.current_gear == 1:
@@ -41,6 +45,7 @@ class TCM:
             else:
                 self.gearbox.downshift()
                 self.calculate_engine_rpm(self.car.speed)
+                self.update_dashboard()
 
     def shift(self, selector):
         if selector=="R":
