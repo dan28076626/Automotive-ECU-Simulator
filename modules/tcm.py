@@ -4,11 +4,17 @@ class TCM:
         self.gearbox=gearbox
         self.canbus=canbus
         self.wheel=wheel
+
+
     def getcanbus(self):
         for message in self.canbus.get_messages("TCM"):
             if message["command"]=="CHANGE_GEAR":
                 self.shift(message["data"])
                 message["processed"]=True
+            elif message["command"]=="UPSHIFT":
+                self.upshift()
+            elif message["command"]=="DOWNSHIFT":
+                self.downshift()
 
 
 
