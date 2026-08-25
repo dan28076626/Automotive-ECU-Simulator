@@ -46,5 +46,37 @@ def test_upshift(tcm):
     
 
     
+def test_safe_downshift(tcm):
+    # --- Set gear and speed ---
+    tcm.gearbox.current_gear=4
+    tcm.car.speed=60
+
+    # --- Calculate rpm ---
+    tcm.calculate_engine_rpm(tcm.car.speed)
+
+    # --- Save rpm ---
+    rpm=tcm.car.rpm
+
+    # --- Downshift ---
+    tcm.downshift()
+
+    # --- Check results ---
+    assert tcm.car.speed==60
+    assert tcm.car.rpm>rpm
+    assert tcm.gearbox.current_gear==3
+
+
+def test_unsafe_rpm(tcm):
+    # --- Set gear and speed ---
+    tcm.gearbox.current_gear=3
+    tcm.car.speed=110
+
+    # --- Downshift ---
+    tcm.downshift()
+
+    # --- Check results ---
+    assert tcm.car.speed==110
+    assert tcm.gearbox.current_gear==3
+
 
     
